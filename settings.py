@@ -1,5 +1,7 @@
 # Django settings for FirstBlog project.
 
+import os.path
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -56,10 +58,16 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
+#STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    '/home/shaman_king_2000/IdeaProjects/djangoblog/blog/static',
+]
+
 STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
@@ -68,11 +76,11 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
+#STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-)
+#)
 
 # List of finder classes that know how to find static files in
 # various locations.
