@@ -65,9 +65,9 @@ MEDIA_URL = ''
 #STATIC_URL = '/static/'
 
 ROOT_PATH = os.path.dirname(__file__)
-
+#Borde inte fungera....
 STATICFILES_DIRS = [
-    [os.path.join(ROOT_PATH, 'static')],
+    '/djangoblog/blog/static',
 ]
 
 STATIC_URL = '/static/'
