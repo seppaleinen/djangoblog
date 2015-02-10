@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8"/>
-    <!--link rel="stylesheet" href="css/style.css"/-->
     <link rel="shortcut icon" href="/static/icon.ico"/>
     <link href="/static/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
     <title>First blog</title>
@@ -43,17 +42,18 @@
       </div>
     </nav>
 
-    <br/><br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <div class="container">
-        <h1>First blog</h1>
-        <hr/>
-        {% for dir in dirs %}
-            <div class="dir">
-            <h2>{{ dir }}</h2>
-            </div>
-            <hr/>
-        {% endfor %}
+        <form action="/input/" method="post">
+            {% csrf_token %}
+            <input type="text" name="inputtext"/>
+            <input type="submit" value="Submit postrequest"/>
+        </form>
     </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/static/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
