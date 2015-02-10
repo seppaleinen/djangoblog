@@ -7,6 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
      url(r'^$', 'djangoblog.blog.views.home', name='home'),
+
+     url(r'#about$', 'djangoblog.blog.views.home', name='home2'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
