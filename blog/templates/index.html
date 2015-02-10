@@ -57,6 +57,22 @@
         {% endfor %}
     </div>
 
+    <hr/>
+    <div class="container">
+        <form action="/input/" method="post">
+            {% csrf_token %}
+            <input type="text" name="inputtext"/>
+            <input type="submit" value="Submit postrequest"/>
+        </form>
+    </div>
+
+    <div class="container">
+        <form action="/input/" method="get">
+            <input type="text" name="inputgettext"/>
+            <input type="submit" value="Submit getrequest"/>
+        </form>
+    </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/static/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
