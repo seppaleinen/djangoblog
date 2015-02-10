@@ -4,7 +4,14 @@ import os
 
 
 def home(request):
-    return render(request, 'second.html')
+    env_workspace = os.getenv('WORKSPACE', "~/")
+    if env_workspace:
+        dirs = [os.path.join(dirpath, f)
+            for dirpath, dirnames, files in os.walk(env_workspace)
+            for f in dirnames if f.endswith('.git')]
+        return render(request, 'index.html', {'dirs':dirs})
+    else:
+        return render(request, 'second.html')
 
 
 def about(request):
@@ -28,4 +35,5 @@ def input(request):
         dirs = [os.path.join(dirpath, f)
             for dirpath, dirnames, files in os.walk(q)
             for f in dirnames if f.endswith('.git')]
+
     return render(request, 'index.html', {'dirs': dirs})
