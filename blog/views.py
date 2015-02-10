@@ -28,8 +28,8 @@ def input(request):
     if 'inputtext' in request.POST and request.POST['inputtext']:
         q = request.POST['inputtext']
         entries = [{'author' : q, 'title' : 'other title', 'bodytext' : 'other bodytext', 'timestamp' : 'other timestamp'}]
-    if 'inputgettext' in request.GET and request.GET['inputgettext']:
-        q = request.GET['inputgettext']
+    if 'inputtext' in request.GET and request.GET['inputtext']:
+        q = request.GET['inputtext']
         entries = [{'author' : q, 'title' : 'other title', 'bodytext' : 'other bodytext', 'timestamp' : 'other timestamp'}]
 
     return render(request, 'index.html', {'posts' : entries})
