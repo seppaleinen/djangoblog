@@ -46,12 +46,24 @@
     <br/>
     <br/>
     <br/>
+    <br/>
     <div class="container">
         <form action="/input/" method="post">
             {% csrf_token %}
-            <input type="text" name="inputtext"/>
-            <input type="submit" value="Submit postrequest"/>
+            <label>Directory to workspace: </label>
+            <input type="text" name="input_text"/>
+            <input type="submit" value="Refresh workspace"/>
         </form>
+    </div>
+    <br/>
+    <div class="container">
+        <hr/>
+        {% for dir in dirs %}
+            <div class="dir">
+            <h2>{{ dir.git_shortname }}</h2>
+            </div>
+            <hr/>
+        {% endfor %}
     </div>
 
 

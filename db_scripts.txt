@@ -1,0 +1,6 @@
+CREATE TABLE `database_directory` (
+	`id`	INTEGER NOT NULL,
+	`git_directory`	TEXT,
+	`git_shortname`	TEXT,
+	PRIMARY KEY(id)
+);
