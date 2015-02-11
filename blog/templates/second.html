@@ -48,10 +48,18 @@
     <br/>
     <br/>
     <div class="container">
+        <form action="/hoj/" method="post">
+            {% csrf_token %}
+            <label for="your_name">Your name: </label>
+            <input id="your_name" type="text" name="your_name" value="{{current_name}}" maxlength="100">
+            <input type="submit" value="OK"/>
+        </form>
+    </div>
+    <div class="container">
         <form action="/input/" method="post">
             {% csrf_token %}
-            <label>Directory to workspace: </label>
-            <input type="text" name="input_text"/>
+            <label>Directory to workspace: </label><br/>
+            <input type="text" name="input_text" value="{{current_workspace}}"/>
             <input type="submit" value="Refresh workspace"/>
         </form>
     </div>

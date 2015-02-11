@@ -4,3 +4,10 @@ CREATE TABLE `database_directory` (
 	`git_shortname`	TEXT,
 	PRIMARY KEY(id)
 );
+
+CREATE TABLE `database_branch` (
+	`id`	INTEGER NOT NULL,
+	`git_shortname`	TEXT NOT NULL,
+	`git_branch`	TEXT NOT NULL,
+	PRIMARY KEY(id)
+);
