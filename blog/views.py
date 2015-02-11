@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from blog.newmodel import posts
 import os
+
+from django.shortcuts import render
+
+from blog.models.domain.dir_domain_model import DirDomain
 
 
 def home(request):
@@ -17,14 +19,16 @@ def home(request):
 def about(request):
     entries = []
     for i in range(2):
-        entries.append(posts)
+        dir_domain = DirDomain(directory="DIR")
+        entries.append(dir_domain)
     return render(request, 'index.html', {'posts': entries})
 
 
 def contact(request):
     entries = []
     for i in range(4):
-        entries.append(posts)
+        dir_domain = DirDomain(directory="DIR")
+        entries.append(dir_domain)
     return render(request, 'index.html', {'posts': entries})
 
 

@@ -1,4 +1,6 @@
 from django.contrib import admin
-from blog.models import posts
 
-admin.site.register(posts)
+from blog.models.db.dir_db_model import Posts
+
+
+admin.site.register(Posts)
