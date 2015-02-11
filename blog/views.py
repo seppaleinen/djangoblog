@@ -7,9 +7,9 @@ from blog.models.database.dir_db_model import Posts
 
 
 def home(request):
-    save_to_database()
-    load_singular_from_database()
-    load_multiple_from_database()
+    #save_to_database()
+    #load_singular_from_database()
+    #load_multiple_from_database()
     env_workspace = os.getenv('WORKSPACE', "~/")
     if env_workspace:
         dirs = [DirDomain(directory=os.path.join(dirpath, f))
