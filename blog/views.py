@@ -2,7 +2,10 @@ import os
 
 from django.shortcuts import render
 
-from blog.models.domain.dir_domain_model import DirDomain
+from blog.models.domain.dir_domain_model import DirectoryDomain
+from blog.models.domain.dir_domain_model import BranchDomain
+from blog.models.domain.dir_domain_model import UserInfoDomain
+from blog.models.domain.dir_domain_model import WorkspaceDomain
 from blog.models.database.dir_db_model import Directory
 from blog.models.database.dir_db_model import Branch
 from blog.models.database.dir_db_model import UserInfo
@@ -15,28 +18,53 @@ def home(request):
 
 
 def username(request):
-    workspace = None
+    user_object = None
     if 'username' in request.POST and request.POST['username']:
         username = request.POST['username']
         user = UserInfo.objects.filter(username=username)
         if user.exists():
-            workspace_list = Workspace.objects.filter(user_info=user)
-            print('workspaces under', user[0].username)
-            for workspac in workspace_list:
-                workspace = workspac
-                print(workspac.workspace)
-                directory_list = Directory.objects.filter(workspace=workspac)
-                for directory in directory_list:
-                    branch_list = Branch.objects.filter(directory=directory)
-                    print('branches under', directory.git_shortname)
-                    for branch in branch_list:
-                        print(branch.git_branch)
+            user_object = map_db_to_domain(username)
         else:
-            print('else')
             new_user = UserInfo.create(username)
             new_user.save()
-    dirs = Directory.objects.filter(workspace=workspace)
-    return render(request, 'second.html', {'dirs': dirs})
+            user_object = UserInfoDomain(username)
+    print(user_object.username)
+    for workspace in user_object.workspaces:
+        print(workspace.workspace)
+        for directory in workspace.directories:
+            print(directory.git_shortname)
+            for branch in directory.git_branches:
+                print(branch.git_branch)
+    return render(request, 'second.html', {'dirs': user_object})
+
+
+def map_db_to_domain(username):
+    user_domain = UserInfoDomain
+    users = UserInfo.objects.filter(username=username)
+    if users.exists():
+        user = users[0]
+        user_domain.username = user.username
+        workspace_list = Workspace.objects.filter(user_info=user)
+        workspace_domain_list = []
+        for workspace in workspace_list:
+            workspace_domain = WorkspaceDomain(workspace.workspace)
+            workspace_domain_list.append(WorkspaceDomain(workspace.workspace))
+            directory_list = Directory.objects.filter(workspace=workspace)
+            directory_domain_list = []
+            for directory in directory_list:
+                directory_domain = DirectoryDomain(directory.git_directory, directory.git_shortname)
+                branch_list = Branch.objects.filter(directory=directory)
+                branch_domain_list = []
+                for branch in branch_list:
+                    branch_domain_list.append(BranchDomain(branch.git_branch))
+
+                directory_domain.git_branches = branch_domain_list
+                directory_domain_list.append(directory_domain)
+            workspace_domain.directories = directory_domain_list
+            workspace_domain_list.append(workspace_domain)
+        user_domain.workspaces = workspace_domain_list
+    return user_domain
+
 
 
 
