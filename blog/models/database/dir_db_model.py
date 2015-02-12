@@ -11,6 +11,9 @@ class Directory(models.Model):
     def create(cls, git_directory, git_shortname):
         return cls(git_directory=git_directory, git_shortname=git_shortname)
 
+    class Meta:
+        db_table = u'database_directory'
+
 
 class Branch(models.Model):
     git_shortname = models.CharField(max_length=100)
@@ -19,3 +22,6 @@ class Branch(models.Model):
     @classmethod
     def create(cls, git_shortname, git_branch):
         return cls(git_shortname=git_shortname, git_branch=git_branch)
+
+    class Meta:
+        db_table = u'database_branch'

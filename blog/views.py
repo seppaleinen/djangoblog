@@ -11,7 +11,7 @@ def home(request):
     all_dirs = Directory.objects.all()
     form = Form()
     if all_dirs.exists():
-        return render(request, 'second.html', {'dirs':all_dirs, 'form':form})
+        return render(request, 'second.html', {'dirs': all_dirs, 'form': form})
     else:
         return render(request, 'second.html')
 
@@ -39,6 +39,7 @@ def input(request):
         dirs = [os.path.join(dirpath, f)
             for dirpath, dirnames, files in os.walk(q)
             for f in dirnames if f.endswith('.git')]
+        Directory.objects.all().delete()
         for dir in dirs:
             git_directory=dir
             git_shortname=dir.replace('/.git', '').split('/')[-1]
