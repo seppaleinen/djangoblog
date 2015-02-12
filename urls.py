@@ -15,6 +15,8 @@ urlpatterns = patterns('',
      url(r'^input/', 'djangoblog.blog.views.input', name='input'),
 
      url(r'^hoj/', 'djangoblog.blog.views.hoj', name='hoj'),
+
+     url(r'^username/', 'djangoblog.blog.views.username', name='username'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

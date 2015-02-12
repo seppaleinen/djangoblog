@@ -4,18 +4,6 @@ from django.db import models
 #Det automatiska tabellnamnet blir paketnamn (database) och class (Directory) med underscore mellan
 #t,ex database_directory
 #om man inte har class Meta med db_table som manuellt saetter om
-class Directory(models.Model):
-    git_directory = models.CharField(max_length=100)
-    git_shortname = models.CharField(max_length=100)
-
-    @classmethod
-    def create(cls, git_directory, git_shortname):
-        return cls(git_directory=git_directory, git_shortname=git_shortname)
-
-    class Meta:
-        db_table = u'database_directory'
-
-
 class UserInfo(models.Model):
     username = models.CharField(max_length=100)
 
@@ -37,6 +25,19 @@ class Workspace(models.Model):
 
     class Meta:
         db_table = u'workspace'
+
+
+class Directory(models.Model):
+    workspace = models.ForeignKey(Workspace)
+    git_directory = models.CharField(max_length=100)
+    git_shortname = models.CharField(max_length=100)
+
+    @classmethod
+    def create(cls, git_directory, git_shortname, workspace=workspace):
+        return cls(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
+
+    class Meta:
+        db_table = u'database_directory'
 
 
 class Branch(models.Model):

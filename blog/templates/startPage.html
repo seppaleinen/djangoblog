@@ -48,24 +48,13 @@
     <br/>
     <br/>
     <div class="container">
-        <form action="/input/" method="post">
+        <form action="/username/" method="post">
             {% csrf_token %}
-            <label>Directory to workspace: </label><br/>
-            <input type="text" name="input_text" value="{{current_workspace}}"/>
-            <input type="submit" value="Refresh workspace"/>
+            <label for="your_name">Enter username: </label>
+            <input id="your_name" type="text" name="username" maxlength="100">
+            <input type="submit" value="OK"/>
         </form>
     </div>
-    <br/>
-    <div class="container">
-        <hr/>
-        {% for dir in dirs %}
-            <div class="dir">
-            <h2>{{ dir.git_shortname }}</h2>
-            </div>
-            <hr/>
-        {% endfor %}
-    </div>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/static/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
