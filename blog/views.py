@@ -4,10 +4,45 @@ from django.shortcuts import render
 
 from blog.models.domain.dir_domain_model import DirDomain
 from blog.models.database.dir_db_model import Directory
+from blog.models.database.dir_db_model import Branch
+from blog.models.database.dir_db_model import UserInfo
+from blog.models.database.dir_db_model import Workspace
 from blog.models.form.form_model import Form
 
 
 def home(request):
+    Directory.objects.all().delete()
+    Branch.objects.all().delete()
+    UserInfo.objects.all().delete()
+    Workspace.objects.all().delete()
+    directory = Directory.create(git_directory='~/hejhej', git_shortname='aelskar jackie')
+    directory.save()
+
+    user_info = UserInfo.create(username='seppa')
+    user_info.save()
+    new_user = UserInfo.objects.filter(username='seppa')[0]
+    print('---- user_info ----')
+    print(new_user.username)
+
+    branch = Branch.create(git_branch='master', directory=directory)
+    branch.save()
+    branch_two = Branch.create(git_branch='secondary', directory=directory)
+    branch_two.save()
+    branches = Branch.objects.filter(directory=directory)
+    print('---- branches ----')
+    for branc in branches:
+        print(branc.directory.git_shortname, branc.git_branch)
+
+    workspace = Workspace.create(user_info=user_info)
+    workspace.save()
+    workspace_two = Workspace.create(user_info=user_info, workspace='licensansokan')
+    workspace_two.save()
+    workspaces = Workspace.objects.filter(user_info=user_info)
+    print('---- workspace ----')
+    for workspac in workspaces:
+        print(workspac.workspace, workspac.user_info.username)
+
+
     all_dirs = Directory.objects.all()
     form = Form()
     if all_dirs.exists():
