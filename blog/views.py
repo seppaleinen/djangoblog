@@ -35,7 +35,7 @@ def username(request):
             print(directory.git_shortname)
             for branch in directory.git_branches:
                 print(branch.git_branch)
-    return render(request, 'second.html', {'dirs': user_object})
+    return render(request, 'second.html', {'user': user_object})
 
 
 def map_db_to_domain(username):
@@ -48,7 +48,6 @@ def map_db_to_domain(username):
         workspace_domain_list = []
         for workspace in workspace_list:
             workspace_domain = WorkspaceDomain(workspace.workspace)
-            workspace_domain_list.append(WorkspaceDomain(workspace.workspace))
             directory_list = Directory.objects.filter(workspace=workspace)
             directory_domain_list = []
             for directory in directory_list:
@@ -66,22 +65,12 @@ def map_db_to_domain(username):
     return user_domain
 
 
-
-
 def about(request):
-    entries = []
-    for i in range(2):
-        dir_domain = DirDomain(directory="~/Downloads")
-        entries.append(dir_domain)
-    return render(request, 'index.html', {'dirs': entries})
+    return render(request, 'index.html')
 
 
 def contact(request):
-    entries = []
-    for i in range(4):
-        dir_domain = DirDomain(directory="~/Downloads")
-        entries.append(dir_domain)
-    return render(request, 'index.html', {'dirs': entries})
+    return render(request, 'index.html')
 
 
 def input(request):
@@ -100,13 +89,7 @@ def input(request):
         for dir in dirs:
             git_directory=dir
             git_shortname=dir.replace('/.git', '').split('/')[-1]
-#            for work in Workspace.objects.filter(workspace='main'):
-#                print('workspace: ', work.workspace)
-#                for dirr in Directory.objects.filter(workspace=work):
-#                    print('deleting', dirr.git_shortname)
             save_dir_to_database(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
-#            for dirrr in Directory.objects.filter(workspace=workspace):
-#                print('found: ', dirrr.git_shortname)
 
         dirs = Directory.objects.filter(workspace=workspace)
     return render(request, 'second.html', {'dirs': dirs, 'current_workspace': q})
