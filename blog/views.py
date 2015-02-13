@@ -2,10 +2,6 @@ import os
 
 from django.shortcuts import render
 
-from blog.models.domain.dir_domain_model import DirectoryDomain
-from blog.models.domain.dir_domain_model import BranchDomain
-from blog.models.domain.dir_domain_model import UserInfoDomain
-from blog.models.domain.dir_domain_model import WorkspaceDomain
 from blog.models.database.dir_db_model import Directory
 from blog.models.database.dir_db_model import Branch
 from blog.models.database.dir_db_model import UserInfo
@@ -17,52 +13,17 @@ def home(request):
     return render(request, 'startPage.html')
 
 
+#TODO Undersok om det gar att fa in db_modellerna som json-komprimerade
+#TODO listor i textfalt i userInfo istallet for separata tabeller
 def username(request):
-    user_object = None
+    users = None
     if 'username' in request.POST and request.POST['username']:
         username = request.POST['username']
-        user = UserInfo.objects.filter(username=username)
-        if user.exists():
-            user_object = map_db_to_domain(username)
-        else:
-            new_user = UserInfo.create(username)
-            new_user.save()
-            user_object = UserInfoDomain(username)
-    print(user_object.username)
-    for workspace in user_object.workspaces:
-        print(workspace.workspace)
-        for directory in workspace.directories:
-            print(directory.git_shortname)
-            for branch in directory.git_branches:
-                print(branch.git_branch)
-    return render(request, 'second.html', {'user': user_object})
-
-
-def map_db_to_domain(username):
-    user_domain = UserInfoDomain
-    users = UserInfo.objects.filter(username=username)
-    if users.exists():
-        user = users[0]
-        user_domain.username = user.username
-        workspace_list = Workspace.objects.filter(user_info=user)
-        workspace_domain_list = []
-        for workspace in workspace_list:
-            workspace_domain = WorkspaceDomain(workspace.workspace)
-            directory_list = Directory.objects.filter(workspace=workspace)
-            directory_domain_list = []
-            for directory in directory_list:
-                directory_domain = DirectoryDomain(directory.git_directory, directory.git_shortname)
-                branch_list = Branch.objects.filter(directory=directory)
-                branch_domain_list = []
-                for branch in branch_list:
-                    branch_domain_list.append(BranchDomain(branch.git_branch))
-
-                directory_domain.git_branches = branch_domain_list
-                directory_domain_list.append(directory_domain)
-            workspace_domain.directories = directory_domain_list
-            workspace_domain_list.append(workspace_domain)
-        user_domain.workspaces = workspace_domain_list
-    return user_domain
+        users = UserInfo.objects.filter(username=username)
+        if not users.exists():
+            users = UserInfo.create(username)
+            users.save()
+    return render(request, 'second.html', {'users': users})
 
 
 def about(request):

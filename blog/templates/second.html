@@ -63,15 +63,16 @@
 
 <div class="container">
     <hr/>
+    {% for user in users %}
     <div class="user">
         <h2>{{ user.username }}</h2>
-        {% for workspace in user.workspaces %}
+        {% for workspace in user.workspace_set.all %}
         <div class="workspace">
             <h3>{{ workspace.workspace }}</h3>
-            {% for directory in workspace.directories %}
+            {% for directory in workspace.directory_set.all %}
             <div class="directory">
                 <h4>{{ directory.git_shortname }}</h4>
-                {% for branch in directory.branches %}
+                {% for branch in directory.branch_set.all %}
                 <div class="branch">
                     <h5>{{ branch.git_branch }}</h5>
                 </div>
@@ -81,6 +82,7 @@
         </div>
         {% endfor %}
     </div>
+    {% endfor %}
     <hr/>
 </div>
 

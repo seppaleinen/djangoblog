@@ -22,8 +22,15 @@ class SimpleTest(TestCase):
 
 class DatabaseTest(TestCase):
     def test_create_user_and_load(self):
-        directory = Directory.create(git_directory='/Users/seppa/workspace', git_shortname='workspace')
+        user_info = UserInfo.create(username='username')
+        user_info.save()
+
+        workspace = Workspace.create(user_info=user_info, workspace='workspace')
+        workspace.save()
+
+        directory = Directory.create(git_directory='/Users/seppa/workspace', git_shortname='workspace', workspace=workspace)
         directory.save()
+
         loaded_directory = Directory.objects.filter(git_shortname='workspace')[0]
         self.assertIsNotNone(loaded_directory, 'loaded_directory should not be None')
         self.assertEqual(loaded_directory.git_directory, '/Users/seppa/workspace', 'git_directory should be equals')
