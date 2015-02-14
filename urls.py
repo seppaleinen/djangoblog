@@ -18,6 +18,8 @@ urlpatterns = patterns('',
 
      url(r'^add/workspace/', 'djangoblog.blog.views.add_workspace', name='add_workspace'),
 
+     url(r'^remove/workspace/', 'djangoblog.blog.views.remove_workspace', name='remove_workspace'),
+
      url(r'^username/', 'djangoblog.blog.views.username', name='username'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 
@@ -27,3 +29,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
      url(r'^admin/', include(admin.site.urls)),
 )
+
+
+
+

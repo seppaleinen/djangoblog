@@ -40,6 +40,29 @@ def add_workspace(request):
     return render(request, 'second.html', {'users': users})
 
 
+def remove_workspace(request):
+    if 'workspace_name' in request.POST and request.POST['workspace_name']:
+        print('workspace')
+        workspace_name = request.POST['workspace_name']
+        workspace_list = Workspace.objects.filter(workspace=workspace_name)
+        for workspace in workspace_list:
+            print("deleting %s" % workspace.workspace)
+            directory_list = workspace.directory_set.all()
+            for directory in directory_list:
+                print(directory)
+                directory.branch_set.delete()
+            directory_list.delete()
+        workspace_list.delete()
+
+    if 'username' in request.POST and request.POST['username']:
+        print("username %s" % request.POST['username'])
+        users = UserInfo.objects.filter(username=request.POST['username'])
+        return render(request, 'second.html', {'users': users})
+    else:
+        return render(request, 'startPage.html')
+
+
+
 def about(request):
     return render(request, 'index.html')
 

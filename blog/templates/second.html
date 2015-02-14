@@ -44,7 +44,15 @@
                         <li class="dropdown-header">Workspaces</li>
                         {% for user in users %}
                             {% for workspace in user.workspace_set.all %}
-                                <li><a href="#">{{ workspace.workspace }}</a></li>
+                                <form action="/remove/workspace/" method="post">
+                                {% csrf_token %}
+                                <li>
+                                    <a href="#">{{ workspace.workspace }}</a>
+                                    <input type="hidden" name="username" value="{{ user.username }}"/>
+                                    <input type="hidden" name="workspace_name" value="{{ workspace.workspace }}"/>
+                                    <input type="submit" value="Remove"/>
+                                </li>
+                                </form>
                             {% endfor %}
                         {% endfor %}
                     </ul>
