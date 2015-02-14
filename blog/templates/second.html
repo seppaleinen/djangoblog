@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="/static/icon.ico"/>
-    <link href="/static/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/standard.css" rel="stylesheet"/>
     <title>First blog</title>
 </head>
 
@@ -36,24 +37,24 @@
                                 <input type="text" name="workspace_name"/>
                                 <input type="submit" value="Add new workspace"/>
                                 {% for user in users %}
-                                    <input type="hidden" name="username" value="{{ user.username }}"/>
+                                <input type="hidden" name="username" value="{{ user.username }}"/>
                                 {% endfor %}
                             </form>
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-header">Workspaces</li>
                         {% for user in users %}
-                            {% for workspace in user.workspace_set.all %}
-                                <form action="/remove/workspace/" method="post">
-                                {% csrf_token %}
-                                <li>
-                                    <a href="#">{{ workspace.workspace }}</a>
-                                    <input type="hidden" name="username" value="{{ user.username }}"/>
-                                    <input type="hidden" name="workspace_name" value="{{ workspace.workspace }}"/>
-                                    <input type="submit" value="Remove"/>
-                                </li>
-                                </form>
-                            {% endfor %}
+                        {% for workspace in user.workspace_set.all %}
+                        <form action="/remove/workspace/" method="post">
+                            {% csrf_token %}
+                            <li>
+                                <a href="#">{{ workspace.workspace }}</a>
+                                <input type="hidden" name="username" value="{{ user.username }}"/>
+                                <input type="hidden" name="workspace_name" value="{{ workspace.workspace }}"/>
+                                <input type="submit" value="Remove"/>
+                            </li>
+                        </form>
+                        {% endfor %}
                         {% endfor %}
                     </ul>
                 </li>
@@ -63,45 +64,45 @@
     </div>
 </nav>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 
 <div class="container">
-    <form action="/input/" method="post">
-        {% csrf_token %}
-        <label>Directory to workspace: </label><br/>
-        <input type="text" name="input_text" value="{{current_workspace}}"/>
-        <input type="submit" value="Refresh workspace"/>
-    </form>
-</div>
-<br/>
+    <div class="row row-offcanvas row-offcanvas-right">
+        <!--<div class="col-xs-12 col-sm-9">-->
+            <div class="jumbotron">
+                <form action="/input/" method="post">
+                    {% csrf_token %}
+                    <label>Directory to workspace: </label><br/>
+                    <input type="text" name="input_text" value="{{current_workspace}}"/>
+                    <input type="submit" value="Refresh workspace"/>
+                </form>
+            </div>
 
-<div class="container">
-    <hr/>
-    {% for user in users %}
-    <div class="user">
-        <h2>{{ user.username }}</h2>
-        {% for workspace in user.workspace_set.all %}
-        <div class="workspace">
-            <h3>{{ workspace.workspace }}</h3>
-            {% for directory in workspace.directory_set.all %}
-            <div class="directory">
-                <h4>{{ directory.git_shortname }}</h4>
-                {% for branch in directory.branch_set.all %}
-                <div class="branch">
-                    <h5>{{ branch.git_branch }}</h5>
+            {% for user in users %}
+            <hr/>
+            <div class="user">
+                <h2>{{ user.username }}</h2>
+                {% for workspace in user.workspace_set.all %}
+                <div class="workspace">
+                    <h3>{{ workspace.workspace }}</h3>
+                    <div class="row">
+                        {% for directory in workspace.directory_set.all %}
+                        <div class="col-sm-6 col-md-4 col-lg-3">
+                            <h4>{{ directory.git_shortname }}</h4>
+                            {% for branch in directory.branch_set.all %}
+                            <div class="branch">
+                                <h5>{{ branch.git_branch }}</h5>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endfor %}
             </div>
             {% endfor %}
-        </div>
-        {% endfor %}
+            <hr/>
+        <!--</div>-->
     </div>
-    {% endfor %}
-    <hr/>
 </div>
 
 
