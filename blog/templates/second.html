@@ -30,9 +30,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li>
+                            <form action="/add/workspace/" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="workspace_name"/>
+                                <input type="submit" value="Add new workspace"/>
+                                {% for user in users %}
+                                    <input type="hidden" name="username" value="{{ user.username }}"/>
+                                {% endfor %}
+                            </form>
+                        </li>
                         <li class="divider"></li>
                         <li class="dropdown-header">Workspaces</li>
                         {% for user in users %}

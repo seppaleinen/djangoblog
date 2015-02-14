@@ -26,6 +26,20 @@ def username(request):
     return render(request, 'second.html', {'users': users})
 
 
+def add_workspace(request):
+    users = []
+    if 'workspace_name' in request.POST and request.POST['workspace_name']:
+        workspace_name = request.POST['workspace_name']
+        if 'username' in request.POST and request.POST['username']:
+            username = request.POST['username']
+            user = UserInfo.objects.get(username=username)
+            users.append(user)
+            workspace = Workspace.create(user, workspace_name)
+            workspace.save()
+
+    return render(request, 'second.html', {'users': users})
+
+
 def about(request):
     return render(request, 'index.html')
 

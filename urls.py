@@ -16,6 +16,8 @@ urlpatterns = patterns('',
 
      url(r'^hoj/', 'djangoblog.blog.views.hoj', name='hoj'),
 
+     url(r'^add/workspace/', 'djangoblog.blog.views.add_workspace', name='add_workspace'),
+
      url(r'^username/', 'djangoblog.blog.views.username', name='username'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 
