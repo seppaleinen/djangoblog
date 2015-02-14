@@ -1,6 +1,7 @@
 import os
 
 from django.shortcuts import render
+import subprocess
 
 from blog.models.database.dir_db_model import Directory
 from blog.models.database.dir_db_model import Branch
@@ -72,8 +73,7 @@ def contact(request):
 
 
 def input(request):
-    dirs = []
-    q = None
+    users = []
     if 'input_text' in request.POST and request.POST['input_text']:
         q = request.POST['input_text']
         workspace = Workspace.objects.filter(workspace='main')[0]
@@ -87,10 +87,13 @@ def input(request):
         for dir in dirs:
             git_directory=dir
             git_shortname=dir.replace('/.git', '').split('/')[-1]
-            save_dir_to_database(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
+            directory = save_dir_to_database(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
+            get_branches_for_dir_and_save(directory)
 
-        dirs = Directory.objects.filter(workspace=workspace)
-    return render(request, 'second.html', {'dirs': dirs, 'current_workspace': q})
+    if 'username' in request.POST and request.POST['username']:
+        username = request.POST['username']
+        users = UserInfo.objects.filter(username=username)
+    return render(request, 'second.html', {'users': users})
 
 
 def hoj(request):
@@ -105,9 +108,26 @@ def hoj(request):
     return render(request, "second.html", {'dirs': Directory.objects.all()})
 
 
+def get_branches_for_dir_and_save(directory):
+    current_branch = None
+    git_work_tree = directory.git_directory.replace('/.git', '')
+    git_dir = directory.git_directory
+    git_command = "git --git-dir=%s --work-tree=%s branch -a" % (git_dir, git_work_tree)
+    result = subprocess.Popen(git_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for line in result.stdout.readlines():
+        if '*' in line:
+            current_branch = line.split('* ')[-1]
+        if 'remotes/' in line:
+            branch = line.split(' ')[2].split('/')[-1].rstrip()
+            if not Branch.objects.filter(git_branch=branch, directory=directory).exists():
+                branch = Branch.create(git_branch=branch, directory=directory)
+                branch.save()
+
+
 def save_dir_to_database(git_directory, git_shortname, workspace):
     directory = Directory.create(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
     directory.save()
+    return directory
 
 
 def test_database():
