@@ -20,6 +20,8 @@ urlpatterns = patterns('',
 
      url(r'^remove/workspace/', 'djangoblog.blog.views.remove_workspace', name='remove_workspace'),
 
+     url(r'^testform/', 'djangoblog.blog.views.testform', name='testform'),
+
      url(r'^username/', 'djangoblog.blog.views.username', name='username'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 

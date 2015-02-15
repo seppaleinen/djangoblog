@@ -108,6 +108,15 @@ def hoj(request):
     return render(request, "second.html", {'dirs': Directory.objects.all()})
 
 
+def testform(request):
+    if request.method == 'POST':
+        form = Form(request.POST)
+        if form.is_valid():
+            print('select %s' % form.cleaned_data.get('select'))
+    else:
+        form = Form()
+    return render(request, "index.html", {'form':form})
+
 def get_branches_for_dir_and_save(directory):
     current_branch = None
     git_work_tree = directory.git_directory.replace('/.git', '')

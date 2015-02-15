@@ -44,15 +44,13 @@
     </nav>
 
     <br/><br/>
+    <br/><br/>
     <div class="container">
-        <h1>First blog</h1>
-        <hr/>
-        {% for dir in dirs %}
-            <div class="dir">
-            <h2>{{ dir.directory }}</h2>
-            </div>
-            <hr/>
-        {% endfor %}
+        <form action="/testform/" method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <input type="submit" value="Submit"/>
+        </form>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
