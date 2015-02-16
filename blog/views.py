@@ -11,7 +11,12 @@ from blog.models.form.form_model import Form
 
 
 def home(request):
-    return render(request, 'startPage.html')
+    if 'username' in request.POST and request.POST['username']:
+        username = request.POST['username']
+        users = UserInfo.objects.filter(username=username)
+        return render(request, 'second.html', {'users' : users})
+    else:
+        return render(request, 'startPage.html')
 
 
 #TODO Undersok om det gar att fa in db_modellerna som json-komprimerade
@@ -61,7 +66,6 @@ def remove_workspace(request):
         return render(request, 'second.html', {'users': users})
     else:
         return render(request, 'startPage.html')
-
 
 
 def about(request):
@@ -117,7 +121,9 @@ def testform(request):
         form = Form()
     return render(request, "index.html", {'form':form})
 
+
 def get_branches_for_dir_and_save(directory):
+    directory.branch_set.all().delete()
     current_branch = None
     git_work_tree = directory.git_directory.replace('/.git', '')
     git_dir = directory.git_directory
@@ -127,9 +133,9 @@ def get_branches_for_dir_and_save(directory):
         if '*' in line:
             current_branch = line.split('* ')[-1]
         if 'remotes/' in line:
-            branch = line.split(' ')[2].split('/')[-1].rstrip()
-            if not Branch.objects.filter(git_branch=branch, directory=directory).exists():
-                branch = Branch.create(git_branch=branch, directory=directory)
+            branch_name = line.split(' ')[2].split('/')[-1].rstrip()
+            if 'HEAD' not in branch_name:
+                branch = Branch.create(git_branch=branch_name, directory=directory)
                 branch.save()
 
 
