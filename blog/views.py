@@ -72,6 +72,13 @@ def about(request):
     return render(request, 'index.html')
 
 
+def testloop(request):
+    if 'submit' in request.POST and request.POST['submit']:
+        value = request.POST['submit']
+        selected_value = request.POST[value.split(' ')[1]]
+    return render(request, "second.html", {'users':UserInfo.objects.filter(username='seppa')})
+
+
 def contact(request):
     return render(request, 'index.html')
 

@@ -22,6 +22,8 @@ urlpatterns = patterns('',
 
      url(r'^testform/', 'djangoblog.blog.views.testform', name='testform'),
 
+     url(r'^testloop/', 'djangoblog.blog.views.testloop', name='testloop'),
+
      url(r'^username/', 'djangoblog.blog.views.username', name='username'),
     # url(r'^FirstBlog/', include('FirstBlog.foo.urls')),
 

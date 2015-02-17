@@ -48,7 +48,7 @@
                         <form action="/remove/workspace/" method="post">
                             {% csrf_token %}
                             <li>
-                                <a href="#">{{ workspace.workspace }}</a>
+                                <input type="submit" name="workspace" value="{{ workspace.workspace }}"/>
                                 <input type="hidden" name="username" value="{{ user.username }}"/>
                                 <input type="hidden" name="workspace_name" value="{{ workspace.workspace }}"/>
                                 <input type="submit" value="Remove"/>
@@ -77,6 +77,8 @@
                 <input type="submit" value="Refresh workspace"/>
             </form>
         </div>
+        <form action="/testloop/" method="post">
+             {% csrf_token %}
 
         {% for user in users %}
         <hr/>
@@ -92,11 +94,13 @@
                     <div class="col-sm-6 col-md-4 col-lg-3 col-xs-height col-full-height">
                         <h4>{{ directory.git_shortname }}</h4>
                         {% if directory.branch_set.all %}
-                        <select name="select_branch_{{ directory.git_shortname }}">
+                        <select name="{{ directory.git_shortname }}">
                         {% for branch in directory.branch_set.all %}
                             <option value="{{branch.git_branch}}">{{branch.git_branch}}</option>
                         {% endfor %}
                         </select>
+                        <br/>
+                        <input type="submit" name="submit" value="Submit {{ directory.git_shortname }}"/>
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -106,6 +110,7 @@
             {% endfor %}
         </div>
         {% endfor %}
+        </form>
         <hr/>
     </div>
 </div>
