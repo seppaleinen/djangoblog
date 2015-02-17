@@ -118,8 +118,11 @@ def testform(request):
         if form.is_valid():
             print('select %s' % form.cleaned_data.get('select'))
     else:
-        form = Form()
-    return render(request, "index.html", {'form':form})
+        branches = []
+        branches.append(('MAS', 'MAS'))
+        branches.append(('SEC', 'SEC'))
+        form = Form(tuple(branches))
+    return render(request, "index.html", {'form': form})
 
 
 def get_branches_for_dir_and_save(directory):
