@@ -3,11 +3,11 @@ import os
 from django.shortcuts import render
 import subprocess
 
-from blog.models.database.dir_db_model import Directory
-from blog.models.database.dir_db_model import Branch
-from blog.models.database.dir_db_model import UserInfo
-from blog.models.database.dir_db_model import Workspace
-from blog.models.form.form_model import Form
+from blog.models import Directory
+from blog.models import Branch
+from blog.models import UserInfo
+from blog.models import Workspace
+from blog.form_model import Form
 
 
 def home(request):
@@ -153,36 +153,3 @@ def save_dir_to_database(git_directory, git_shortname, workspace):
     directory = Directory.create(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
     directory.save()
     return directory
-
-
-def test_database():
-    Directory.objects.all().delete()
-    Branch.objects.all().delete()
-    UserInfo.objects.all().delete()
-    Workspace.objects.all().delete()
-    directory = Directory.create(git_directory='~/hejhej', git_shortname='aelskar jackie')
-    directory.save()
-
-    user_info = UserInfo.create(username='seppa')
-    user_info.save()
-    new_user = UserInfo.objects.filter(username='seppa')[0]
-    print('---- user_info ----')
-    print(new_user.username)
-
-    branch = Branch.create(git_branch='master', directory=directory)
-    branch.save()
-    branch_two = Branch.create(git_branch='secondary', directory=directory)
-    branch_two.save()
-    branches = Branch.objects.filter(directory=directory)
-    print('---- branches ----')
-    for branc in branches:
-        print(branc.directory.git_shortname, branc.git_branch)
-
-    workspace = Workspace.create(user_info=user_info)
-    workspace.save()
-    workspace_two = Workspace.create(user_info=user_info, workspace='licensansokan')
-    workspace_two.save()
-    workspaces = Workspace.objects.filter(user_info=user_info)
-    print('---- workspace ----')
-    for workspac in workspaces:
-        print(workspac.workspace, workspac.user_info.username)
