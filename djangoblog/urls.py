@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from tdd import views
+import tdd.urls
 
 urlpatterns = patterns('',
     # Examples:
@@ -27,4 +28,6 @@ urlpatterns = patterns('',
     url(r'^tdd/', views.HomeView.as_view(), name='home_view'),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^', include(tdd.urls)),
 )
