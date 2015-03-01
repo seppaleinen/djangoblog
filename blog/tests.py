@@ -24,48 +24,39 @@ class ModelsMetaTest(TestCase):
 
 
 class DatabaseTest(TestCase):
-    def test_create_user_and_load(self):
-        user_info = UserInfo.create(username='username')
-        user_info.save()
+    def setUp(self):
+        self.user_info = UserInfo.create(username='username')
+        self.user_info.save()
 
+        self.workspace = Workspace.create(user_info=self.user_info, workspace='main')
+        self.workspace.save()
+
+        self.directory = Directory.create(git_directory='pathname', git_shortname='name', workspace=self.workspace)
+        self.directory.save()
+
+        self.branch = Branch.create(git_branch='master', directory=self.directory)
+        self.branch.save()
+
+    def test_create_user_and_load(self):
         db_user_info = UserInfo.objects.get(username='username')
         self.assertTrue(db_user_info)
         self.assertEqual(db_user_info.username, 'username')
-
-        workspace = Workspace.create(user_info=user_info, workspace='main')
-        workspace.save()
 
         db_workspace = Workspace.objects.get(workspace='main')
         self.assertTrue(db_workspace)
         self.assertEqual(db_workspace.workspace, 'main')
 
-        directory = Directory.create(git_directory='pathname', git_shortname='name', workspace=workspace)
-        directory.save()
-
         db_directory = Directory.objects.get(git_shortname='name')
         self.assertTrue(db_directory)
         self.assertEqual(db_directory.git_directory, 'pathname')
-
-        branch = Branch.create(git_branch='master', directory=directory)
-        branch.save()
 
         db_branch = Branch.objects.get(git_branch='master')
         self.assertTrue(db_branch)
         self.assertEqual(db_branch.git_branch, 'master')
 
     def test_reverse_lookup_from_user_info(self):
-        #Save entries
-        user_info = UserInfo.create(username='user2')
-        user_info.save()
-        workspace = Workspace.create(user_info=user_info, workspace='main2')
-        workspace.save()
-        directory = Directory.create(git_directory='pathname', git_shortname='name', workspace=workspace)
-        directory.save()
-        branch = Branch.create(git_branch='second', directory=directory)
-        branch.save()
-
         #Get userinfo model and reverse lookup the tree
-        db_user_info = UserInfo.objects.get(username='user2')
+        db_user_info = UserInfo.objects.get(username=self.user_info.username)
         self.assertTrue(db_user_info)
         db_workspace_list = db_user_info.workspace_set.all()
         self.assertTrue(db_workspace_list)
