@@ -1,13 +1,13 @@
 import os
 
 from django.shortcuts import render
-import subprocess
 
 from blog.models import Directory
-from blog.models import Branch
 from blog.models import UserInfo
 from blog.models import Workspace
 from blog.form_model import Form
+from blog.logic.database_manager import get_branches_for_dir_and_save
+from blog.logic.database_manager import save_dir_to_database
 
 
 def home(request):
@@ -130,26 +130,3 @@ def testform(request):
         branches.append(('SEC', 'SEC'))
         form = Form(tuple(branches))
     return render(request, "index.html", {'form': form})
-
-
-def get_branches_for_dir_and_save(directory):
-    directory.branch_set.all().delete()
-    current_branch = None
-    git_work_tree = directory.git_directory.replace('/.git', '')
-    git_dir = directory.git_directory
-    git_command = "git --git-dir=%s --work-tree=%s branch -a" % (git_dir, git_work_tree)
-    result = subprocess.Popen(git_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    for line in result.stdout.readlines():
-        if '*' in line:
-            current_branch = line.split('* ')[-1]
-        if 'remotes/' in line:
-            branch_name = line.split(' ')[2].split('/')[-1].rstrip()
-            if 'HEAD' not in branch_name:
-                branch = Branch.create(git_branch=branch_name, directory=directory)
-                branch.save()
-
-
-def save_dir_to_database(git_directory, git_shortname, workspace):
-    directory = Directory.create(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
-    directory.save()
-    return directory
