@@ -93,10 +93,24 @@ class StartPageTests(TestCase):
 
 
 class SecondPageTests(TestCase):
+    def setUp(self):
+        user_info = UserInfo.create(username='user')
+        user_info.save()
+        workspace = Workspace.create(user_info=user_info, workspace='workspace_name')
+        workspace.save()
+        directory = Directory.create(git_directory='pathname', git_shortname='git_branch_name', workspace=workspace)
+        directory.save()
+        branch = Branch.create(git_branch='branch_name', directory=directory)
+        branch.save()
+
     def test_homepage(self):
-        response = self.client.post('/username/')
+        response = self.client.post('/username/', {'username':'user'})
         self.assertEqual(response.status_code, 200)
 
     def test_page_contains(self):
-        response = self.client.post('/username/')
+        response = self.client.post('/username/', {'username':'user'})
         self.assertContains(response, 'Directory to workspace:')
+        self.assertContains(response, 'user')
+        self.assertContains(response, 'workspace_name')
+        self.assertContains(response, 'git_branch_name')
+        self.assertContains(response, 'branch_name')
