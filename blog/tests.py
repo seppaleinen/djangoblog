@@ -3,6 +3,9 @@ from blog.models import Directory
 from blog.models import Branch
 from blog.models import UserInfo
 from blog.models import Workspace
+from blog.logic.git_manager import get_all_branches
+from blog.logic.git_manager import git_check_updates_all_branches
+import os
 
 
 class ModelsMetaTest(TestCase):
@@ -105,3 +108,16 @@ class SecondPageTests(TestCase):
         self.assertContains(response, 'workspace_name')
         self.assertContains(response, 'git_branch_name')
         self.assertContains(response, 'branch_name')
+
+
+class GitManagerTests(TestCase):
+    def setUp(self):
+        self.base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.git')
+
+    def test_get_all_branches(self):
+        result = get_all_branches(directory_name=self.base_dir)
+        self.assertTrue('master' in line for line in result)
+
+    def test_git_check_updates_all_branches(self):
+        result = git_check_updates_all_branches(directory_name=self.base_dir)
+        self.assertTrue('(up to date)' in line for line in result)

@@ -53,4 +53,4 @@ def __do_git_command__(directory_name, git_arg):
     """
     git_work_tree = directory_name.replace('/.git', '')
     git_command = "git --git-dir=%s --work-tree=%s %s" % (directory_name, git_work_tree, git_arg)
-    return subprocess.Popen(git_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    return subprocess.Popen(git_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout.readlines()
