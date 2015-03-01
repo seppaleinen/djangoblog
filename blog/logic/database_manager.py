@@ -1,5 +1,6 @@
 from blog.models import Directory
 from blog.models import Branch
+from blog.models import Workspace
 from blog.logic.git_manager import get_all_branches
 
 
@@ -21,3 +22,13 @@ def get_branches_for_dir_and_save(directory):
             if 'HEAD' not in branch_name:
                 branch = Branch.create(git_branch=branch_name, directory=directory)
                 branch.save()
+
+
+def remove_all_under_workspace(workspace_name):
+    workspace_list = Workspace.objects.filter(workspace=workspace_name)
+    for workspace in workspace_list:
+        directory_list = workspace.directory_set.all()
+        for directory in directory_list:
+            directory.branch_set.delete()
+        directory_list.delete()
+    workspace_list.delete()

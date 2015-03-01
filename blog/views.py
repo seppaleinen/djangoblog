@@ -8,6 +8,7 @@ from blog.models import Workspace
 from blog.form_model import Form
 from blog.logic.database_manager import get_branches_for_dir_and_save
 from blog.logic.database_manager import save_dir_to_database
+from blog.logic.database_manager import remove_all_under_workspace
 
 
 def home(request):
@@ -19,8 +20,6 @@ def home(request):
         return render(request, 'startPage.html')
 
 
-#TODO Undersok om det gar att fa in db_modellerna som json-komprimerade
-#TODO listor i textfalt i userInfo istallet for separata tabeller
 def username(request):
     users = None
     if 'username' in request.POST and request.POST['username']:
@@ -50,16 +49,7 @@ def remove_workspace(request):
     if 'workspace_name' in request.POST and request.POST['workspace_name']:
         print('workspace')
         workspace_name = request.POST['workspace_name']
-        workspace_list = Workspace.objects.filter(workspace=workspace_name)
-        for workspace in workspace_list:
-            print("deleting %s" % workspace.workspace)
-            directory_list = workspace.directory_set.all()
-            for directory in directory_list:
-                print(directory)
-                directory.branch_set.delete()
-            directory_list.delete()
-        workspace_list.delete()
-
+        remove_all_under_workspace(workspace_name=workspace_name)
     if 'username' in request.POST and request.POST['username']:
         print("username %s" % request.POST['username'])
         users = UserInfo.objects.filter(username=request.POST['username'])
