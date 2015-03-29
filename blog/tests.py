@@ -161,9 +161,17 @@ class DatabaseManagerTests(TestCase):
         db_directory_after = Directory.objects.get(git_directory=self.base_dir)
         self.assertIsNotNone(db_directory_after)
         branch_list = db_directory_after.branch_set.all()
+        found = False
         for branch in branch_list:
-            print(branch)
+            found = 'master' in branch.git_branch
+        self.assertTrue(found)
 
+    def test_remove_all_under_workspace(self):
+        result = remove_all_under_workspace(self.workspace.workspace)
+
+        self.assertFalse(Branch.objects.filter(git_branch=self.branch.git_branch))
+        self.assertFalse(Directory.objects.filter(git_shortname=self.directory.git_shortname))
+        self.assertFalse(Workspace.objects.filter(workspace=self.workspace.workspace))
 
 
 

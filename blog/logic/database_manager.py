@@ -26,9 +26,4 @@ def get_branches_for_dir_and_save(directory):
 
 def remove_all_under_workspace(workspace_name):
     workspace_list = Workspace.objects.filter(workspace=workspace_name)
-    for workspace in workspace_list:
-        directory_list = workspace.directory_set.all()
-        for directory in directory_list:
-            directory.branch_set.delete()
-        directory_list.delete()
-    workspace_list.delete()
+    workspace_list.all().delete()
