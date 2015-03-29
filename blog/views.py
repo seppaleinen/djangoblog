@@ -26,8 +26,9 @@ def username(request):
         username = request.POST['username']
         users = UserInfo.objects.filter(username=username)
         if not users.exists():
-            users = UserInfo.create(username)
-            users.save()
+            user = UserInfo.create(username)
+            user.save()
+            users = UserInfo.objects.filter(username=username)
     return render(request, 'second.html', {'users': users})
 
 

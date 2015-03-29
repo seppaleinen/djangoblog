@@ -80,6 +80,21 @@ class DatabaseTest(TestCase):
 
 
 class StartPageTests(TestCase):
+    def setUp(self):
+        self.base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.git')
+
+        self.user_info = UserInfo.create(username='username')
+        self.user_info.save()
+
+        self.workspace = Workspace.create(user_info=self.user_info, workspace='main')
+        self.workspace.save()
+
+        self.directory = Directory.create(git_directory=self.base_dir, git_shortname='name', workspace=self.workspace)
+        self.directory.save()
+
+        self.branch = Branch.create(git_branch='branch_name', directory=self.directory)
+        self.branch.save()
+
     def test_homepage(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
@@ -88,11 +103,18 @@ class StartPageTests(TestCase):
         response = self.client.get('/')
         self.assertContains(response, 'id="your_name"')
 
+    def test_post_homepage(self):
+        response = self.client.post('/', {'username': self.user_info.username})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.branch.git_branch)
+
+
 
 class SecondPageTests(TestCase):
     def setUp(self):
         user_info = UserInfo.create(username='user')
         user_info.save()
+        self.user_info = user_info
         workspace = Workspace.create(user_info=user_info, workspace='workspace_name')
         workspace.save()
         directory = Directory.create(git_directory='pathname', git_shortname='git_branch_name', workspace=workspace)
@@ -111,6 +133,14 @@ class SecondPageTests(TestCase):
         self.assertContains(response, 'workspace_name')
         self.assertContains(response, 'git_branch_name')
         self.assertContains(response, 'branch_name')
+
+    def test_username_user_not_exist(self):
+        UserInfo.objects.filter(username=self.user_info.username).delete()
+        self.assertFalse(UserInfo.objects.filter(username=self.user_info.username))
+        
+        response = self.client.post('/username/', {'username': 'user'})
+        self.assertIsNotNone(UserInfo.objects.filter(username=self.user_info.username))
+        self.assertEqual(response.status_code, 200)
 
 
 class GitManagerTests(TestCase):
@@ -172,9 +202,3 @@ class DatabaseManagerTests(TestCase):
         self.assertFalse(Branch.objects.filter(git_branch=self.branch.git_branch))
         self.assertFalse(Directory.objects.filter(git_shortname=self.directory.git_shortname))
         self.assertFalse(Workspace.objects.filter(workspace=self.workspace.workspace))
-
-
-
-
-
-
