@@ -48,11 +48,9 @@ def add_workspace(request):
 
 def remove_workspace(request):
     if 'workspace_name' in request.POST and request.POST['workspace_name']:
-        print('workspace')
         workspace_name = request.POST['workspace_name']
         remove_all_under_workspace(workspace_name=workspace_name)
     if 'username' in request.POST and request.POST['username']:
-        print("username %s" % request.POST['username'])
         users = UserInfo.objects.filter(username=request.POST['username'])
         return render(request, 'second.html', {'users': users})
     else:

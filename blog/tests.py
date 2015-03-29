@@ -142,6 +142,20 @@ class SecondPageTests(TestCase):
         self.assertIsNotNone(UserInfo.objects.filter(username=self.user_info.username))
         self.assertEqual(response.status_code, 200)
 
+    def test_add_workspace(self):
+        response = self.client.post('/add/workspace/', 
+            {'username': self.user_info.username, 
+            'workspace_name': 'secondary'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'secondary')
+
+    def test_remove_workspace_with_username(self):
+        response = self.client.post('/remove/workspace/',
+            {'username': self.user_info.username,
+            'workspace_name': 'workspace_name'})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(Workspace.objects.filter(workspace='workspace_name'))
+
 
 class GitManagerTests(TestCase):
     def setUp(self):
