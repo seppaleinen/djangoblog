@@ -9,6 +9,6 @@ script: coverage run --source tdd --source blog manage.py test
 after_success: coveralls
 
 deploy:
-	provider: heroku
-	api_key: 1c26a711-07cf-47be-a337-c70df8498c75
-	app: davidsdjango
+  provider: heroku
+  api_key: 1c26a711-07cf-47be-a337-c70df8498c75
+  app: davidsdjango
