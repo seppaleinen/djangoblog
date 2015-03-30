@@ -12,7 +12,4 @@ deploy:
   provider: heroku
   api_key: 1c26a711-07cf-47be-a337-c70df8498c75
   app: davidsdjango
-  run:
-    - "python manage.py syncdb"
-    - "python manage.py migrate"
-    - "python manage.py runserver"
+  run: "python manage.py syncdb && python manage.py migrate && python manage.py runserver"
