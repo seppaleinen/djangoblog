@@ -10,6 +10,10 @@ after_success: coveralls
 
 deploy:
   provider: heroku
+  buildpack: python
   api_key: 1c26a711-07cf-47be-a337-c70df8498c75
   app: davidsdjango
-  run: "python manage.py syncdb && python manage.py migrate && python manage.py runserver"
+  strategy: git
+  on:
+    repo: seppaleinen/djangoblog
+  run: "python manage.py syncdb --noinput && python manage.py migrate --all"
