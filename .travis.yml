@@ -13,7 +13,4 @@ deploy:
   buildpack: python
   api_key: 1c26a711-07cf-47be-a337-c70df8498c75
   app: davidsdjango
-  strategy: git
-  on:
-    repo: seppaleinen/djangoblog
   run: "python manage.py syncdb --noinput && python manage.py migrate --all"
