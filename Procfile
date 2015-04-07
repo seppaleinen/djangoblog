@@ -1,1 +1,0 @@
-web: gunicorn --config=gunicorn.config.py djangoblog.wsgi
