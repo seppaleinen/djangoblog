@@ -73,7 +73,6 @@ def contact(request):
 
 
 def input(request):
-    users = []
     if 'input_text' in request.POST and request.POST['input_text']:
         q = request.POST['input_text']
         workspace = Workspace.objects.filter(workspace='main')[0]
@@ -83,16 +82,15 @@ def input(request):
 
         dirs = [os.path.join(dirpath, f)
             for dirpath, dirnames, files in os.walk(q)
-            for f in dirnames if f.endswith('.git')]
-        for dir in dirs:
-            git_directory=dir
-            git_shortname=dir.replace('/.git', '').split('/')[-1]
+            for f in dirnames if f.endswith('.git') and files is not None]
+        for dir_name in dirs:
+            git_directory=dir_name
+            git_shortname=dir_name.replace('/.git', '').split('/')[-1]
             directory = save_dir_to_database(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
             get_branches_for_dir_and_save(directory)
 
     if 'username' in request.POST and request.POST['username']:
-        username = request.POST['username']
-        users = UserInfo.objects.filter(username=username)
+        users = UserInfo.objects.filter(username=request.POST['username'])
     return render(request, 'second.html', {'users': users})
 
 

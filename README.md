@@ -1,5 +1,8 @@
 
 <a href='https://coveralls.io/r/seppaleinen/djangoblog?branch=master'><img src='https://coveralls.io/repos/seppaleinen/djangoblog/badge.svg?branch=master' alt='Coverage Status' /></a>
+<a href="https://landscape.io/github/seppaleinen/djangoblog/master">
+  <img alt="Code Health" src="https://landscape.io/github/seppaleinen/djangoblog/master/landscape.svg?style=flat"/>
+</a>
 
 
 # django
