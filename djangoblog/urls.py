@@ -13,7 +13,7 @@ urlpatterns = patterns('',
 
     url(r'^contact$', 'blog.views.contact', name='contact'),
 
-    url(r'^input/', 'blog.views.input', name='input'),
+    url(r'^input/', 'blog.views.input_view', name='input_view'),
 
     url(r'^hoj/', 'blog.views.hoj', name='hoj'),
 

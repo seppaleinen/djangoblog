@@ -12,11 +12,10 @@ def save_dir_to_database(git_directory, git_shortname, workspace):
 
 def get_branches_for_dir_and_save(directory):
     directory.branch_set.all().delete()
-    current_branch = None
     result = get_all_branches(directory.git_directory)
     for line in result:
-        if '*' in line:
-            current_branch = line.split('* ')[-1]
+        #if '*' in line:
+            #current_branch = line.split('* ')[-1]
         if 'remotes/' in line:
             branch_name = line.split(' ')[2].split('/')[-1].rstrip()
             if 'HEAD' not in branch_name:

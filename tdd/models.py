@@ -15,7 +15,7 @@ class Entry(models.Model):
     def get_absolute_url(self):
         return reverse('entry_detail', kwargs={'pk': self.pk})
 
-    class Meta:
+    class Meta(object):
         verbose_name_plural = 'entries'
 
 

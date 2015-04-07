@@ -65,6 +65,7 @@ def testloop(request):
     if 'submit' in request.POST and request.POST['submit']:
         value = request.POST['submit']
         selected_value = request.POST[value.split(' ')[1]]
+        print(selected_value)
     return render(request, "second.html", {'users':UserInfo.objects.filter(username='seppa')})
 
 
@@ -72,7 +73,7 @@ def contact(request):
     return render(request, 'index.html')
 
 
-def input(request):
+def input_view(request):
     if 'input_text' in request.POST and request.POST['input_text']:
         q = request.POST['input_text']
         workspace = Workspace.objects.filter(workspace='main')[0]

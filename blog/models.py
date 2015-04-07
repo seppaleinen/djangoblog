@@ -11,7 +11,7 @@ class UserInfo(models.Model):
     def create(cls, username):
         return cls(username=username)
 
-    class Meta:
+    class Meta(object):
         verbose_name_plural = 'user_info_list'
         db_table = u'user_info'
 
@@ -24,7 +24,7 @@ class Workspace(models.Model):
     def create(cls, user_info=user_info, workspace='main'):
         return cls(user_info=user_info, workspace=workspace)
 
-    class Meta:
+    class Meta(object):
         verbose_name_plural = 'workspace_list'
         db_table = u'workspace'
 
@@ -38,7 +38,7 @@ class Directory(models.Model):
     def create(cls, git_directory, git_shortname, workspace=workspace):
         return cls(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
 
-    class Meta:
+    class Meta(object):
         verbose_name_plural = 'directory_list'
         db_table = u'database_directory'
 
@@ -51,6 +51,6 @@ class Branch(models.Model):
     def create(cls, git_branch, directory):
         return cls(git_branch=git_branch, directory=directory)
 
-    class Meta:
+    class Meta(object):
         verbose_name_plural = 'branch_list'
         db_table = u'database_branch'
