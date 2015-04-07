@@ -223,7 +223,7 @@ class DatabaseManagerTests(TestCase):
         db_branch_before = Branch.objects.get(git_branch='branch_name')
         self.assertIsNotNone(db_branch_before)
 
-        result = get_branches_for_dir_and_save(self.directory)
+        get_branches_for_dir_and_save(self.directory)
         db_directory_after = Directory.objects.get(git_directory=self.base_dir)
         self.assertIsNotNone(db_directory_after)
         branch_list = db_directory_after.branch_set.all()
@@ -233,7 +233,7 @@ class DatabaseManagerTests(TestCase):
         self.assertTrue(found)
 
     def test_remove_all_under_workspace(self):
-        result = remove_all_under_workspace(self.workspace.workspace)
+        remove_all_under_workspace(self.workspace.workspace)
 
         self.assertFalse(Branch.objects.filter(git_branch=self.branch.git_branch))
         self.assertFalse(Directory.objects.filter(git_shortname=self.directory.git_shortname))

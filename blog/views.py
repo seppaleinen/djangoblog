@@ -104,7 +104,7 @@ def hoj(request):
             return render(request, "second.html", {'dirs': Directory.objects.all(),
                                                    'current_name': form.cleaned_data['your_name']})
     else:
-        form = Form()
+        form = Form(request.POST)
     return render(request, "second.html", {'dirs': Directory.objects.all()})
 
 
