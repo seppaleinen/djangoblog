@@ -3,6 +3,7 @@
 <a href="https://landscape.io/github/seppaleinen/djangoblog/master">
   <img alt="Code Health" src="https://landscape.io/github/seppaleinen/djangoblog/master/landscape.svg?style=flat"/>
 </a>
+<img src="https://travis-ci.org/seppaleinen/djangoblog.svg" data-bindattr-817="817" title="Build Status Images">
 
 
 # django
