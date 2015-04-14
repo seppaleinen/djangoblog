@@ -4,7 +4,7 @@
   <img alt="Code Health" src="https://landscape.io/github/seppaleinen/djangoblog/master/landscape.svg?style=flat"/>
 </a>
 <img src="https://travis-ci.org/seppaleinen/djangoblog.svg" data-bindattr-817="817" title="Build Status Images">
-<img class="wio-badge" data-original-title="Show badge urls" data-toggle="tooltip" data-placement="right" ng-src="/static/2.20/badges/flat/insecure.svg" ng-click="displayBadge = !displayBadge" src="/static/2.20/badges/flat/insecure.svg">
+<a href="https://codecov.io/github/seppaleinen/djangoblog?branch=master"><img src="https://codecov.io/github/seppaleinen/djangoblog/coverage.svg?branch=master" alt="Coverage via codecov.io" /></a>
 <a href="https://requires.io/github/seppaleinen/djangoblog/requirements/?branch=master"><img src="https://requires.io/github/seppaleinen/djangoblog/requirements.svg?branch=master" alt="Requirements Status" /></a>
 
 
