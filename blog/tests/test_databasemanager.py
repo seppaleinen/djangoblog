@@ -39,7 +39,6 @@ class DatabaseManagerTests(TestCase):
     def test_get_branches_for_dir_and_save(self):
         db_branch_before = Branch.objects.get(git_branch='branch_name')
         self.assertIsNotNone(db_branch_before)
-        print("BASE %s" % self.base_dir)
 
         get_branches_for_dir_and_save(self.directory)
         db_directory_after = Directory.objects.get(git_directory=self.base_dir)
