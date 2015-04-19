@@ -24,6 +24,7 @@ class SecondPageTests(TestCase):
         response = self.client.post('/username/', {'username':'user'})
         self.assertEqual(response.status_code, 200)
 
+
     def test_page_contains(self):
         response = self.client.post('/username/', {'username':'user'})
         self.assertContains(response, 'Directory to workspace:')
@@ -69,7 +70,7 @@ class SecondPageTests(TestCase):
 
     def test_input(self):
         Workspace.create(user_info=self.user_info, workspace='main').save()
-        workspace = self.base_dir.replace('djangoblog/.git', '')
+        workspace = self.base_dir.replace('.git', '')
         response = self.client.post('/input/', 
             {"input_text": workspace, "username": "user"})
         self.assertEqual(response.status_code, 200)
