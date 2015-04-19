@@ -12,7 +12,7 @@ class SeleniumTestCase(LiveServerTestCase):
 			cls.selenium.maximize_window()
 			super(SeleniumTestCase, cls).setUpClass()
 		except Exception:
-			SkipTest("Firefox not installed on system")
+			raise SkipTest("Firefox not installed on system")
 
 	@classmethod
 	def tearDownClass(cls):
