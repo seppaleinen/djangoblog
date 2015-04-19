@@ -12,7 +12,6 @@ class SeleniumTestCase(LiveServerTestCase):
 			cls.selenium.maximize_window()
 			super(SeleniumTestCase, cls).setUpClass()
 		except Exception:
-			self.skip=True
 			SkipTest("Firefox not installed on system")
 
 	@classmethod
