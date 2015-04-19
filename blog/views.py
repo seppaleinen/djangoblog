@@ -61,14 +61,6 @@ def about(request):
     return render(request, 'index.html')
 
 
-def testloop(request):
-    if 'submit' in request.POST and request.POST['submit']:
-        value = request.POST['submit']
-        selected_value = request.POST[value.split(' ')[1]]
-        print(selected_value)
-    return render(request, "second.html", {'users':UserInfo.objects.filter(username='seppa')})
-
-
 def contact(request):
     return render(request, 'index.html')
 
@@ -90,28 +82,3 @@ def input_view(request):
     if 'username' in request.POST and request.POST['username']:
         users = UserInfo.objects.filter(username=request.POST['username'])
     return render(request, 'second.html', {'users': users})
-
-
-def hoj(request):
-    if request.method == 'POST':
-        form = Form(request.POST)
-        if form.is_valid():
-            print('awwyiss')
-            return render(request, "second.html", {'dirs': Directory.objects.all(),
-                                                   'current_name': form.cleaned_data['your_name']})
-    else:
-        form = Form(request.POST)
-    return render(request, "second.html", {'dirs': Directory.objects.all()})
-
-
-def testform(request):
-    if request.method == 'POST':
-        form = Form(request.POST)
-        if form.is_valid():
-            print('select %s' % form.cleaned_data.get('select'))
-    else:
-        branches = []
-        branches.append(('MAS', 'MAS'))
-        branches.append(('SEC', 'SEC'))
-        form = Form(tuple(branches))
-    return render(request, "index.html", {'form': form})

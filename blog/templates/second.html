@@ -77,8 +77,6 @@
                 <input type="submit" value="Refresh workspace"/>
             </form>
         </div>
-        <form action="/testloop/" method="post">
-             {% csrf_token %}
 
         {% for user in users %}
         <hr/>
@@ -110,7 +108,6 @@
             {% endfor %}
         </div>
         {% endfor %}
-        </form>
         <hr/>
     </div>
 </div>

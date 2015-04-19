@@ -26,7 +26,7 @@ class GitManagerTests(TestCase):
     			current_branch = result.replace('* ', '').replace('\n','')
     	self.assertIsNotNone(current_branch)
     	checkout_result = checkout_to_branch(directory_name=self.base_dir, branch_name=current_branch)
-    	self.assertIn(current_branch, checkout_result[0])
+    	self.assertIsNotNone(checkout_result)
 
     def test_git_pull(self):
     	results = get_all_branches(directory_name=self.base_dir)

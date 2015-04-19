@@ -15,15 +15,9 @@ urlpatterns = patterns('',
 
     url(r'^input/', 'blog.views.input_view', name='input_view'),
 
-    url(r'^hoj/', 'blog.views.hoj', name='hoj'),
-
     url(r'^add/workspace/', 'blog.views.add_workspace', name='add_workspace'),
 
     url(r'^remove/workspace/', 'blog.views.remove_workspace', name='remove_workspace'),
-
-    url(r'^testform/', 'blog.views.testform', name='testform'),
-
-    url(r'^testloop/', 'blog.views.testloop', name='testloop'),
 
     url(r'^username/', 'blog.views.username', name='username'),
 
