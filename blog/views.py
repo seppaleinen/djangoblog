@@ -76,10 +76,7 @@ def contact(request):
 def input_view(request):
     if 'input_text' in request.POST and request.POST['input_text']:
         q = request.POST['input_text']
-        workspace = Workspace.objects.filter(workspace='main')[0]
-        dirs_to_remove = Directory.objects.filter(workspace=workspace)
-        for remove_dir in dirs_to_remove:
-            remove_dir.delete()
+        remove_all_under_workspace('main')
 
         dirs = [os.path.join(dirpath, f)
             for dirpath, dirnames, files in os.walk(q)
