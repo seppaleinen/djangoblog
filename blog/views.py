@@ -76,6 +76,9 @@ def input_view(request):
         for dir_name in dirs:
             git_directory=dir_name
             git_shortname=dir_name.replace('/.git', '').split('/')[-1]
+            user_info = UserInfo.objects.get(username=request.POST['username'])
+            workspace = Workspace.create(user_info=user_info)
+            workspace.save()
             directory = save_dir_to_database(git_directory=git_directory, git_shortname=git_shortname, workspace=workspace)
             get_branches_for_dir_and_save(directory)
 

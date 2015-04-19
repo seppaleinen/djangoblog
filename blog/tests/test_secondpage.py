@@ -3,12 +3,13 @@ from blog.models import Directory
 from blog.models import Branch
 from blog.models import UserInfo
 from blog.models import Workspace
+from blog import views
 import os
 
 
 class SecondPageTests(TestCase):
     def setUp(self):
-        self.base_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.git')
+        self.base_dir = os.path.join(os.path.dirname(os.path.dirname(views.__file__)), '.git')
 
         user_info = UserInfo.create(username='user')
         user_info.save()
