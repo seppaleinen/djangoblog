@@ -5,7 +5,6 @@ from django.shortcuts import render
 from blog.models import Directory
 from blog.models import UserInfo
 from blog.models import Workspace
-from blog.form_model import Form
 from blog.logic.database_manager import get_branches_for_dir_and_save
 from blog.logic.database_manager import save_dir_to_database
 from blog.logic.database_manager import remove_all_under_workspace
