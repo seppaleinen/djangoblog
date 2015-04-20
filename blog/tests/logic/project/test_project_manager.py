@@ -15,3 +15,7 @@ class ProjectManagerTest(TestCase):
 	def test_search_dir_for_projects(self):
 		result = self.project_manager.search_dir_for_projects(path=self.base_dir)
 		self.assertEquals(1, len(result))
+
+	def test_define_project_type(self):
+		result = self.project_manager.define_project_type(path=self.base_dir)
+		self.assertEquals(result, 'django')
