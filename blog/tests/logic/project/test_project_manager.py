@@ -35,3 +35,8 @@ class ProjectManagerTest(TestCase):
 		pysetup_path = os.path.join(os.path.dirname(os.path.dirname(maven.__file__)), 'pysetup')
 		result = self.project_manager.define_project_type(path=pysetup_path)
 		self.assertEquals(result, 'pysetup')
+
+	def test_define_project_type_undefined(self):
+		undefined_path = os.path.join(os.path.dirname(os.path.dirname(maven.__file__)), 'undefined')
+		result = self.project_manager.define_project_type(path=undefined_path)
+		self.assertEquals(result, 'undefined')
