@@ -6,8 +6,12 @@ from blog.tests.resources import maven
 
 
 class ProjectManagerTest(TestCase):
+	@classmethod
+	def setUpClass(cls):
+		cls.base_dir = os.path.dirname(os.path.dirname(views.__file__))
+		super(ProjectManagerTest, cls).setUpClass()
+
 	def setUp(self):
-		self.base_dir = os.path.dirname(os.path.dirname(views.__file__))
 		self.project_manager = ProjectManager()
 
 	def tearDown(self):

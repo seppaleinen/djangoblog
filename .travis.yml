@@ -4,7 +4,7 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements.txt
 # command to run tests, e.g. python setup.py test
-script: coverage run --source=blog,djangoblog,tdd --omit=*migrations*,*tests* manage.py test
+script: coverage run --source=blog,djangoblog,tdd --omit=*migrations*,*tests*,djangoblog/wsgi* manage.py test
 
 after_success: 
   - coveralls
