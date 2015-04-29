@@ -7,3 +7,6 @@ gunicorn==19.3.0
 codecov==1.1.7
 selenium==2.45.0
 splinter==0.7.2
+zope.testbrowser
+lxml
+cssselect
