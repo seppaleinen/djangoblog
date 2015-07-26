@@ -4,4 +4,4 @@ django-webtest==1.7.8
 coverage==3.7.1
 coveralls==0.5
 gunicorn==19.3.0
-codecov==1.2.2
+codecov==1.2.3
