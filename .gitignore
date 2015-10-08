@@ -4,3 +4,4 @@
 .coverage
 static/admin
 *.log
+venv/
