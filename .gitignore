@@ -5,3 +5,4 @@
 static/admin
 *.log
 venv/
+*.iml
