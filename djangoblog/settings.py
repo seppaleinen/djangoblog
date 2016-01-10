@@ -22,8 +22,6 @@ SECRET_KEY = 'fq1_1i-lo_-r_%m=wsl9fva%y32d6zk-uamuwdny!m%n(wzdyl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -111,8 +109,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'blog/templates'),
-    os.path.join(BASE_DIR, 'tdd/templates'),
-)
