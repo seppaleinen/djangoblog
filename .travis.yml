@@ -4,7 +4,7 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements.txt
 # command to run tests, e.g. python setup.py test
-script: coverage run --source=blog,djangoblog,tdd --omit=*migrations*,*tests*,djangoblog/wsgi* manage.py test
+script: coverage run --source=blog,djangoblog --omit=*migrations*,*tests*,djangoblog/wsgi* manage.py test
 sudo: false
 cache: pip
 
@@ -15,10 +15,3 @@ after_success:
 env:
   global:
     - SECURE="adBS5Q2SLykuUBCYfYXCYZjk715I9aiJJ4A0+COPZkPsGKPmj9dTz4tfvlSEpHsG7C28ByMDnJj5FMJgssK+A+9ERRyIgwhwzkDiy4N+73HgkwwYEeYJv/STBxttbOSO3SrtFs7KJ7e2wg7cbvgVLT2gbWF+xiCMPrRHuWJGU80="
-
-deploy:
-  provider: heroku
-  buildpack: python
-  api_key: 1c26a711-07cf-47be-a337-c70df8498c75
-  app: davidsdjango
-  run: "python manage.py syncdb --noinput && python manage.py migrate"
