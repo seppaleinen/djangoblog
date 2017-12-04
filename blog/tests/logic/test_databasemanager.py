@@ -46,7 +46,7 @@ class DatabaseManagerTests(TestCase):
         branch_list = db_directory_after.branch_set.all()
         found = False
         for branch in branch_list:
-            print(branch)
+            print(branch.git_branch)
             found = 'master' in branch.git_branch
         self.assertTrue(found)
 
