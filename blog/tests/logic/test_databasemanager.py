@@ -36,6 +36,7 @@ class DatabaseManagerTests(TestCase):
         db_dir = Directory.objects.get(git_shortname='djangoblog')
         self.assertIsNotNone(db_dir)
 
+    # This test will fail in travis when pushing other branch than master...
     def test_get_branches_for_dir_and_save(self):
         db_branch_before = Branch.objects.get(git_branch='branch_name')
         self.assertIsNotNone(db_branch_before)
