@@ -10,9 +10,9 @@
 
 #Django
 
-`python manage.py runserver`      To run server and deploy
-`python manage.py test`           To test
-`python manage.py makemigrations` To make changes scripts to db
-`python manage.py migrate`        To run db changes scripts
+`python3 manage.py runserver`      To run server and deploy
+`python3 manage.py test`           To test
+`python3 manage.py makemigrations` To make changes scripts to db
+`python3 manage.py migrate`        To run db changes scripts
 
 `gunicorn --config=gunicorn.config.py djangoblog.wsgi` To start gunicorn server running on localhost:8000
