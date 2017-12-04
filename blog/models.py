@@ -17,7 +17,7 @@ class UserInfo(models.Model):
 
 
 class Workspace(models.Model):
-    user_info = models.ForeignKey(UserInfo)
+    user_info = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
     workspace = models.CharField(max_length=100)
 
     @classmethod
@@ -30,7 +30,7 @@ class Workspace(models.Model):
 
 
 class Directory(models.Model):
-    workspace = models.ForeignKey(Workspace)
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE)
     git_directory = models.CharField(max_length=100)
     git_shortname = models.CharField(max_length=100)
 
@@ -44,7 +44,7 @@ class Directory(models.Model):
 
 
 class Branch(models.Model):
-    directory = models.ForeignKey(Directory)
+    directory = models.ForeignKey(Directory, on_delete=models.CASCADE)
     git_branch = models.CharField(max_length=100)
 
     @classmethod
